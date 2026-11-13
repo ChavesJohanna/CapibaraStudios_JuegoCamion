@@ -14,6 +14,8 @@ public class BotonJugar : MonoBehaviour
         boton.onClick.AddListener(() =>
         {
             SceneManager.LoadScene(nombreEscena);
+
+            Time.timeScale = 1f; //se activamos el juego
         });
     }
 }
