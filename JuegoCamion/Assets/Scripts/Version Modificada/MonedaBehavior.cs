@@ -5,23 +5,27 @@ using UnityEngine;
 public class MonedaBehavior : MonoBehaviour
 {
     AudioSource audioSource;
-    // Start is called before the first frame update
+
+    private HudMoneda hudMoneda;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        hudMoneda = GameObject.FindGameObjectWithTag("Moneda")?.GetComponent<HudMoneda>();
     }
 
-    // Update is called once per frame
     void Update()
     {
          transform.Rotate (Vector3.up * 50 * Time.deltaTime, Space.World);
     }
 
-    private void OnTriggerEnter(Collider other){
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.gameObject.CompareTag("Player"))
         {
             audioSource.Play();
-           //Aqui va el comportamiento para que sume puntaje
+           //Aqui va el comportamiento para que sume puntaje (ke puntaje kbron!)
+           hudMoneda.SumarMoneda();
            GameObject.Destroy(gameObject);
         }
     }

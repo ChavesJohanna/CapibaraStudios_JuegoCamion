@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class HudReloj : MonoBehaviour// se encuentra en el objeto Relog dento del PanelTiempo/Moneda del HUD
+public class HudReloj : MonoBehaviour// se encuentra en el objeto Relog dento del HUD
 {
     private TextMeshProUGUI texto;
 
@@ -13,7 +13,7 @@ public class HudReloj : MonoBehaviour// se encuentra en el objeto Relog dento de
 
     private void Start()
     {
-        texto = transform.Find("Texto").GetComponent<TextMeshProUGUI>();
+        texto = transform.Find("Texto")?.GetComponent<TextMeshProUGUI>();
 
         Invoke(nameof(IniciarTemporizador), 3f); //el nameof evita que ocurran errores si se escribe en string
     }
