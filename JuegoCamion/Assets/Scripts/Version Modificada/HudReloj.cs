@@ -37,5 +37,10 @@ public class HudReloj : MonoBehaviour// se encuentra en el objeto Relog dento de
         iniciarTiempo = true;
     }
 
-    
+    public bool TiempoAgotado => iniciarTiempo && tiempo <= 0f;
+
+    public void SumarTiempo(float segundos)
+    {
+        tiempo += segundos;
+    }
 }

@@ -16,7 +16,7 @@ public class MovementControl : MonoBehaviour {
     public int contAzul = 0;
     public int contRojo = 0;
 
-    PlayerInterface playerInterface;
+    HudManager hud;
 
     public AudioSource fxSource;
     public AudioSource sonidoMotor;
@@ -26,7 +26,7 @@ public class MovementControl : MonoBehaviour {
         m_rigidbody = GetComponent<Rigidbody>();
         m_rigidbody.centerOfMass = centerOfMass.localPosition;
 
-        playerInterface = FindObjectOfType<PlayerInterface>();
+        hud = FindObjectOfType<HudManager>();
     }
 
     void Update()
@@ -75,12 +75,10 @@ public class MovementControl : MonoBehaviour {
         {
             if (contAmarillo != 0)
             {
-                playerInterface.AumentarPuntaje(contAmarillo * 10);
-                playerInterface.tiempo = playerInterface.tiempo + 10 * contAmarillo;
+                hud.DepositarResiduos("Amarillo", contAmarillo);
                 PlaySoundLeaving();
             }
             contAmarillo = 0;
-            playerInterface.ActualizarCantidadItem("Amarillo", contAmarillo);
             Debug.Log("Amarillo: " + contAmarillo);
         }
 
@@ -88,12 +86,10 @@ public class MovementControl : MonoBehaviour {
         {
             if (contVerde != 0)
             {
-                playerInterface.AumentarPuntaje(contVerde * 10);
-                playerInterface.tiempo = playerInterface.tiempo + 10 * contVerde;
+                hud.DepositarResiduos("Verde", contVerde);
                 PlaySoundLeaving();
             }
             contVerde = 0;
-            playerInterface.ActualizarCantidadItem("Verde", contVerde);
             Debug.Log("Verde: " + contVerde);
         }
 
@@ -101,12 +97,10 @@ public class MovementControl : MonoBehaviour {
         {
             if (contAzul != 0)
             {
-                playerInterface.AumentarPuntaje(contAzul * 10);
-                playerInterface.tiempo = playerInterface.tiempo + 10 * contAzul;
+                hud.DepositarResiduos("Azul", contAzul);
                 PlaySoundLeaving();
             }
             contAzul = 0;
-            playerInterface.ActualizarCantidadItem("Azul", contAzul);
             Debug.Log("Azul: " + contAzul);
         }
 
@@ -114,12 +108,10 @@ public class MovementControl : MonoBehaviour {
         {
             if (contRojo != 0)
             {
-                playerInterface.AumentarPuntaje(contRojo * 10);
-                playerInterface.tiempo = playerInterface.tiempo + 10 * contRojo;
+                hud.DepositarResiduos("Rojo", contRojo);
                 PlaySoundLeaving();
             }
             contRojo = 0;
-            playerInterface.ActualizarCantidadItem("Rojo", contRojo);
             Debug.Log("Rojo: " + contRojo);
         }
     }

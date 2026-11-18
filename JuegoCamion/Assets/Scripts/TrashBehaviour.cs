@@ -6,59 +6,53 @@ public class TrashBehaviour : MonoBehaviour
 {
 
     MovementControl player;
-    PlayerInterface playerInterface;
-    AudioSource sonidoRecoger;
+    HudManager hud;
+    bool recogida = false; //evita contar dos veces si el camión toca la basura con más de un collider
 
     private void Start()
     {
         player = FindObjectOfType<MovementControl>();
-        playerInterface = FindObjectOfType<PlayerInterface>();
-        sonidoRecoger = FindObjectOfType<AudioSource>();
+        hud = FindObjectOfType<HudManager>();
+
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Amarillo") && player.contAmarillo < 5)
+        if (recogida || player == null || hud == null || !other.gameObject.CompareTag("Player")) return;
+
+        if (this.gameObject.CompareTag("Amarillo") && player.contAmarillo < 5)
         {
+            recogida = true;
             player.contAmarillo++;
-            playerInterface.ActualizarCantidadItem("Amarillo", player.contAmarillo);
-            playerInterface.AumentarPuntaje(10);
+            hud.RecogerResiduo("Amarillo", player.contAmarillo);
             Destroy(this.gameObject);
             Debug.Log("Amarillo: " + player.contAmarillo);
-            Debug.Log("Destroy Amarillo");
-            sonidoRecoger.Play();
         }
 
-        if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Verde") && player.contVerde < 5)
+        else if (this.gameObject.CompareTag("Verde") && player.contVerde < 5)
         {
+            recogida = true;
             player.contVerde++;
-            playerInterface.ActualizarCantidadItem("Verde", player.contVerde);
-            playerInterface.AumentarPuntaje(10);
+            hud.RecogerResiduo("Verde", player.contVerde);
             Destroy(this.gameObject);
             Debug.Log("Verde: " + player.contVerde);
-            Debug.Log("Destroy Verde");
-            sonidoRecoger.Play();
         }
 
-        if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Azul") && player.contAzul < 5)
+        else if (this.gameObject.CompareTag("Azul") && player.contAzul < 5)
         {
+            recogida = true;
             player.contAzul++;
-            playerInterface.ActualizarCantidadItem("Azul", player.contAzul);
-            playerInterface.AumentarPuntaje(10);
+            hud.RecogerResiduo("Azul", player.contAzul);
             Destroy(this.gameObject);
             Debug.Log("Azul: " + player.contAzul);
-            Debug.Log("Destroy Azul");
-            sonidoRecoger.Play();
         }
 
-        if (other.gameObject.CompareTag("Player") && this.gameObject.CompareTag("Rojo") && player.contRojo < 5)
+        else if (this.gameObject.CompareTag("Rojo") && player.contRojo < 5)
         {
+            recogida = true;
             player.contRojo++;
-            playerInterface.ActualizarCantidadItem("Rojo", player.contRojo);
-            playerInterface.AumentarPuntaje(10);
+            hud.RecogerResiduo("Rojo", player.contRojo);
             Destroy(this.gameObject);
             Debug.Log("Rojo: " + player.contRojo);
-            Debug.Log("Destroy Rojo");
-            sonidoRecoger.Play();
         }
     }
 }

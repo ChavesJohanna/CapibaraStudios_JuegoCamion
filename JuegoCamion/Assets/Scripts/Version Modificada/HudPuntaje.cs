@@ -16,9 +16,10 @@ public class HudPuntaje : MonoBehaviour
         texto.text = puntajeActual.ToString(); //setiamos el texto a 0
     }
 
-    public void SumarPuntaje()
+    public int Puntaje => puntajeActual;
+    public void SumarPuntaje(int puntos=1)
     {
-        puntajeActual++;
+        puntajeActual+= puntos;
         texto.text = puntajeActual.ToString();
     }
 }
