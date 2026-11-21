@@ -9,6 +9,8 @@ public class MovementControl : MonoBehaviour {
     public Transform centerOfMass;
     public float acclSensitivity = 5.0f;
     public float speed;
+    public float fuerzaFreno = 20000f;
+    public float desaceleracionFreno = 10f; //0 = solo frenan las ruedas, 0 > frena cada vez más en seco
 
 
     public int contAmarillo = 0;
@@ -36,18 +38,36 @@ public class MovementControl : MonoBehaviour {
 
     void FixedUpdate()
     {
-        
-        float steer = Input.acceleration.x;
+        bool manual = OpcionesJuego.Modo == ModoManejo.Manual;
+
+        float steer = manual ? ControlesEntrada.Direccion : Input.acceleration.x;
         float fixedAngle = steer * 45f;
         wheelColliders[0].steerAngle = fixedAngle;
         wheelColliders[1].steerAngle = fixedAngle;
 
-        
-        float acceleration = -Input.acceleration.y * speed;
+        bool frenando = manual && ControlesEntrada.Frenando;
+        float acceleration;
+        if (manual)
+            acceleration = (ControlesEntrada.Acelerando && !frenando) ? speed : 0f;
+        else
+            acceleration = -Input.acceleration.y * speed;
+
         for (int i = 0; i < 4; i++)
         {
             wheelColliders[i].motorTorque = acceleration * maxTorque;
+            wheelColliders[i].brakeTorque = frenando ? fuerzaFreno : 0f;
         }
+
+        if (frenando) FrenadoDeEmergencia();
+    }
+
+    //Ayuda que el camión frene más rápido
+    void FrenadoDeEmergencia()
+    {
+        Vector3 v = m_rigidbody.velocity;
+        Vector3 plano = new Vector3(v.x, 0f, v.z);
+        plano = Vector3.MoveTowards(plano, Vector3.zero, desaceleracionFreno * Time.fixedDeltaTime);
+        m_rigidbody.velocity = new Vector3(plano.x, v.y, plano.z);
     }
 
     void UpdateMeshesPositions()
