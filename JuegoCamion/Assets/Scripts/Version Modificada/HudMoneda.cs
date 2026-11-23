@@ -20,5 +20,7 @@ public class HudMoneda : MonoBehaviour//esta en el objeto con el mismo nombre de
     {
         cantMonedas++;
         texto.text = cantMonedas.ToString();
+
+        GuardarResultados.GuardarMoneda(cantMonedas); //guardamo la monedas
     }
 }

@@ -21,5 +21,7 @@ public class HudPuntaje : MonoBehaviour
     {
         puntajeActual+= puntos;
         texto.text = puntajeActual.ToString();
+
+        GuardarResultados.GuardarPuntaje(puntajeActual); //guardamo el puntaje
     }
 }
