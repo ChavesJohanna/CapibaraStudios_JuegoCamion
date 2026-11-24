@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class BotonJugar : MonoBehaviour
 {
     private Button boton;
-    private string nombreEscena = "Nivel";
+    //private string nombreEscena = "Nivel";
+    private string nombreEscena = "Tutorial";
 
     private void Start()
     {

@@ -120,7 +120,9 @@ public class MovementControl : MonoBehaviour {
 
     public void PlaySoundLeaving()
     {
-        sonidoMotor.PlayOneShot(sonidoDejar);
+        AudioSource fuente = fxSource != null ? fxSource : sonidoMotor;
+        if (fuente != null && sonidoDejar != null)
+            fuente.PlayOneShot(sonidoDejar);
     }
 
     private void OnTriggerEnter(Collider other)

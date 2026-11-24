@@ -82,6 +82,12 @@ public class MonstruoBehaviour : MonoBehaviour
         modelo.localScale = new Vector3(escala.x, escala.y * 0.15f, escala.z);
 
         float espera = segundosAplastado;
+        AudioSource audio = GetComponent<AudioSource>();
+        if (audio != null && audio.clip != null)
+        {
+            audio.Play();
+            espera = Mathf.Max(espera, audio.clip.length);
+        }
 
         Destroy(gameObject, espera);
     }
