@@ -375,6 +375,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3539933054941007132, guid: ee738e533fa820a418aeb51c26c5e351, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ec380264e17c6a041b8fc33c8fa13834, type: 3}
     - target: {fileID: 3539933054941007133, guid: ee738e533fa820a418aeb51c26c5e351, type: 3}
       propertyPath: m_Name
       value: MusicaMenu
