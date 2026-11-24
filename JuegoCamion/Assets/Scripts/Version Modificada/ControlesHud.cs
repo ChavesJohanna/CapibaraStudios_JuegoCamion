@@ -39,10 +39,7 @@ public class ControlesHud : MonoBehaviour
         Colocar(pedalFreno, baseFreno, espejar);
         Colocar(volante, baseVolante, espejar);
 
-        bool manual = OpcionesJuego.Modo == ModoManejo.Manual;
-        volante.gameObject.SetActive(manual);
-        pedalAcelerador.gameObject.SetActive(manual);
-        pedalFreno.gameObject.SetActive(manual);
+        volante.gameObject.SetActive(OpcionesJuego.Modo == ModoManejo.Manual);
     }
 
     private static Anclaje Guardar(RectTransform r)

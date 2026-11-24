@@ -56,6 +56,12 @@ public class HudManager : MonoBehaviour
         ActualizarTextoBasura(tipo, 0);
     }
 
+    //Puntos que no vienen de recoger ni depositar (ej: atropellar un monstruo)
+    public void SumarPuntos(int puntos)
+    {
+        hudPuntaje?.SumarPuntaje(puntos);
+    }
+
     private void ActualizarTextoBasura(string tipo, int cantidad)
     {
         if (Enum.TryParse(tipo, out TipoResiduo indice) && Enum.IsDefined(typeof(TipoResiduo), indice))

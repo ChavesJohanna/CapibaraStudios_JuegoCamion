@@ -11,6 +11,9 @@ public class MovementControl : MonoBehaviour {
     public float speed;
     public float fuerzaFreno = 20000f;
     public float desaceleracionFreno = 10f; //0 = solo frenan las ruedas, 0 > frena cada vez más en seco
+    public float potenciaReversa = 0.6f;
+    public float velocidadMaximaReversa = 8f;
+    public float umbralParada = 0.5f;
 
 
     public int contAmarillo = 0;
@@ -38,19 +41,14 @@ public class MovementControl : MonoBehaviour {
 
     void FixedUpdate()
     {
-        bool manual = OpcionesJuego.Modo == ModoManejo.Manual;
-
-        float steer = manual ? ControlesEntrada.Direccion : Input.acceleration.x;
+        // GIROSCOPIO: dirige inclinando el dispositivo. MANUAL: dirige con el volante en pantalla.
+        float steer = OpcionesJuego.Modo == ModoManejo.Giroscopio ? Input.acceleration.x : ControlesEntrada.Direccion;
         float fixedAngle = steer * 45f;
         wheelColliders[0].steerAngle = fixedAngle;
         wheelColliders[1].steerAngle = fixedAngle;
 
-        bool frenando = manual && ControlesEntrada.Frenando;
-        float acceleration;
-        if (manual)
-            acceleration = (ControlesEntrada.Acelerando && !frenando) ? speed : 0f;
-        else
-            acceleration = -Input.acceleration.y * speed;
+        // En ambos modos se acelera, frena y da reversa con los pedales del HUD.
+        float acceleration = CalcularAceleracionManual(out bool frenando);
 
         for (int i = 0; i < 4; i++)
         {
@@ -59,6 +57,44 @@ public class MovementControl : MonoBehaviour {
         }
 
         if (frenando) FrenadoDeEmergencia();
+    }
+
+    float CalcularAceleracionManual(out bool frenando)
+    {
+        float velAdelante = Vector3.Dot(m_rigidbody.velocity, transform.forward);
+        bool acelerador = ControlesEntrada.Acelerando;
+        bool pedalFreno = ControlesEntrada.Frenando;
+        frenando = false;
+
+        if (acelerador && pedalFreno)
+        {
+            frenando = true;
+            return 0f;
+        }
+
+        if (pedalFreno)
+        {
+            if (velAdelante > umbralParada)
+            {
+                frenando = true; 
+                return 0f;
+            }
+            if (velAdelante > -velocidadMaximaReversa)
+                return -speed * potenciaReversa;
+            return 0f;
+        }
+
+        if (acelerador)
+        {
+            if (velAdelante < -umbralParada)
+            {
+                frenando = true;
+                return 0f;
+            }
+            return speed;
+        }
+
+        return 0f;
     }
 
     //Ayuda que el camión frene más rápido
