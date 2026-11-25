@@ -574,7 +574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 78228668910852163, guid: ff1922eddb6c6c94caaccf956a911788, type: 3}
       propertyPath: m_Padding.m_Bottom
-      value: 150
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 78228669399410470, guid: ff1922eddb6c6c94caaccf956a911788, type: 3}
       propertyPath: m_AnchorMax.y

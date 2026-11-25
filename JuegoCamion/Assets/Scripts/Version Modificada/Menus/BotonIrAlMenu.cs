@@ -16,6 +16,8 @@ public class BotonIrAlMenu : MonoBehaviour
             SceneManager.LoadScene(nombreEscena);
 
             Time.timeScale = 1f; //se activamos el juego
+
+            GuardarResultados.ReiniciarResultados(); //reiniciamo
         });
     }
 }

@@ -7,7 +7,7 @@ public class HudReloj : MonoBehaviour// se encuentra en el objeto Relog dento de
 {
     private TextMeshProUGUI texto;
 
-    private float tiempo = 60f; // 1:30 min
+    private float tiempo = 180f; // 3 min
 
     private bool iniciarTiempo = false;
 
